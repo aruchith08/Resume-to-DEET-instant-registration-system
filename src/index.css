@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --color-deet-blue: #012169;
+  --color-deet-accent: #f27d26;
+}
+
+body {
+  @apply bg-[#fafafa] text-slate-900 font-sans;
+}
+
+.deet-gradient {
+  background: linear-gradient(135deg, #012169 0%, #003399 100%);
+}
+
