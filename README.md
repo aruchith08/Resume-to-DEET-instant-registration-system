@@ -1,4 +1,4 @@
-# ResumeAI - Smart Job Portal
+# DEET - Smart Job Portal
 
 AI-powered resume parsing and professional profile management dashboard.
 
