@@ -9,11 +9,6 @@ AI-powered resume parsing and professional profile management dashboard.
 - **AI Resume Parsing**: Upload your resume and let Gemini AI fill out your profile automatically.
 - **Professional Dashboard**: Manage your experience, education, and skills in a clean, modern interface.
 - **Vercel Ready**: Optimized for deployment on Vercel.
-# 🚀 Resume to DEET – Instant AI Registration System
-
-AI-powered resume parsing and intelligent profile management dashboard that transforms manual registration into a 5-second automated experience.
-
----
 
 ## 🧠 Overview
 
