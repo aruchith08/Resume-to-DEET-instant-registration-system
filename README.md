@@ -1,6 +1,8 @@
 # DEET - Smart Job Portal
 
 AI-powered resume parsing and professional profile management dashboard.
+<img width="1918" height="911" alt="image" src="https://github.com/user-attachments/assets/adfe9042-3ab3-4318-81a3-c8995275fded" />
+<img width="1918" height="911" alt="image" src="https://github.com/user-attachments/assets/adfe9042-3ab3-4318-81a3-c8995275fded" />
 
 ## Features
 - **AI Resume Parsing**: Upload your resume and let Gemini AI fill out your profile automatically.
