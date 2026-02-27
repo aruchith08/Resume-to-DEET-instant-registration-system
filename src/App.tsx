@@ -577,18 +577,21 @@ function SignupPage({ onSignup }: { onSignup: (data: ResumeData) => void }) {
             )}
 
             <div className="grid grid-cols-2 gap-4">
-              <select 
-                value={formData.socialStatus}
-                onChange={(e) => setFormData({...formData, socialStatus: e.target.value})}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-deet-blue outline-none transition-all text-sm"
-                required
-              >
-                <option value="">Social Status *</option>
-                <option value="OC">Open Category (OC)</option>
-                <option value="SC">SC</option>
-                <option value="ST">ST</option>
-                <option value="Minority">Minority</option>
-              </select>
+              <div className="space-y-1">
+                <select 
+                  value={formData.socialStatus}
+                  onChange={(e) => setFormData({...formData, socialStatus: e.target.value})}
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-deet-blue outline-none transition-all text-sm"
+                  required
+                >
+                  <option value="">Social Status *</option>
+                  <option value="OC">Open Category (OC)</option>
+                  <option value="SC">SC</option>
+                  <option value="ST">ST</option>
+                  <option value="Minority">Minority</option>
+                </select>
+                <p className="text-[10px] text-slate-400 pl-1 italic">Note: Usually requires manual selection.</p>
+              </div>
 
               <select 
                 value={formData.district}
