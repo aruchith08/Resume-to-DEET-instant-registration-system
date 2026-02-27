@@ -54,7 +54,7 @@ const INITIAL_DATA: ResumeData = {
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<{ text: string, type: 'error' | 'success' } | null>(null);
   const [resumeData, setResumeData] = useState<ResumeData>(INITIAL_DATA);
   const [activeTab, setActiveTab] = useState('profile');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -64,7 +64,7 @@ export default function App() {
     if (!file) return;
 
     setIsParsing(true);
-    setError(null);
+    setStatus(null);
     try {
       const reader = new FileReader();
       reader.onload = async () => {
@@ -72,7 +72,7 @@ export default function App() {
         const data = await parseResume(base64, file.type);
         
         if (data.isValidResume === false) {
-          setError("Invalid file. Please upload a valid resume.");
+          setStatus({ text: "Invalid file. Please upload a valid resume.", type: 'error' });
           setIsParsing(false);
           return;
         }
@@ -86,19 +86,20 @@ export default function App() {
         const isMissingRequired = requiredFields.some(field => !data[field]);
 
         if (data.isInsufficient || isMissingRequired) {
-          setError("insufficient details in resume please add them manually to continue");
+          setStatus({ text: "insufficient details in resume please add them manually to continue", type: 'error' });
           setResumeData(prev => ({ ...prev, ...data }));
           setIsParsing(false);
           return;
         }
 
+        setStatus({ text: "Profile details updated successfully via AI", type: 'success' });
         setResumeData(prev => ({ ...prev, ...data }));
         setIsParsing(false);
       };
       reader.readAsDataURL(file);
     } catch (error) {
       console.error('Error parsing resume:', error);
-      setError("Failed to parse resume. Please try again.");
+      setStatus({ text: "Failed to parse resume. Please try again.", type: 'error' });
       setIsParsing(false);
     }
   };
@@ -133,14 +134,18 @@ export default function App() {
           <h1 className="text-lg font-bold text-slate-700">Candidate Profile</h1>
           <div className="flex items-center gap-3">
             <AnimatePresence>
-              {error && (
+              {status && (
                 <motion.div 
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-100"
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold border ${
+                    status.type === 'error' 
+                      ? 'bg-red-50 text-red-600 border-red-100' 
+                      : 'bg-green-50 text-green-600 border-green-100'
+                  }`}
                 >
-                  {error}
+                  {status.text}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -308,7 +313,7 @@ function CompactInfo({ icon, label, value }: { icon: React.ReactNode, label: str
 
 function SignupPage({ onSignup }: { onSignup: (data: ResumeData) => void }) {
   const [isParsing, setIsParsing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<{ text: string, type: 'error' | 'success' } | null>(null);
   const [formData, setFormData] = useState<ResumeData>(INITIAL_DATA);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -317,7 +322,7 @@ function SignupPage({ onSignup }: { onSignup: (data: ResumeData) => void }) {
     if (!file) return;
 
     setIsParsing(true);
-    setError(null);
+    setStatus(null);
     try {
       const reader = new FileReader();
       reader.onload = async () => {
@@ -325,7 +330,7 @@ function SignupPage({ onSignup }: { onSignup: (data: ResumeData) => void }) {
         const data = await parseResume(base64, file.type);
         
         if (data.isValidResume === false) {
-          setError("Invalid file. Please upload a valid resume.");
+          setStatus({ text: "Invalid file. Please upload a valid resume.", type: 'error' });
           setIsParsing(false);
           return;
         }
@@ -339,19 +344,20 @@ function SignupPage({ onSignup }: { onSignup: (data: ResumeData) => void }) {
         const isMissingRequired = requiredFields.some(field => !data[field]);
 
         if (data.isInsufficient || isMissingRequired) {
-          setError("insufficient details in resume please add them manually to continue");
+          setStatus({ text: "insufficient details in resume please add them manually to continue", type: 'error' });
           setFormData(prev => ({ ...prev, ...data }));
           setIsParsing(false);
           return;
         }
 
+        setStatus({ text: "details are added and please generate your password to continue", type: 'success' });
         setFormData(prev => ({ ...prev, ...data }));
         setIsParsing(false);
       };
       reader.readAsDataURL(file);
     } catch (error) {
       console.error('Error parsing resume:', error);
-      setError("Failed to parse resume. Please try again.");
+      setStatus({ text: "Failed to parse resume. Please try again.", type: 'error' });
       setIsParsing(false);
     }
   };
@@ -380,17 +386,33 @@ function SignupPage({ onSignup }: { onSignup: (data: ResumeData) => void }) {
           {/* AI Upload Section */}
           <div className="mb-8">
             <div 
-              className={`p-5 bg-slate-50 rounded-2xl border-2 border-dashed transition-all group cursor-pointer ${error ? 'border-red-300 bg-red-50' : 'border-slate-200 hover:border-deet-blue hover:bg-blue-50/30'}`} 
+              className={`p-5 bg-slate-50 rounded-2xl border-2 border-dashed transition-all group cursor-pointer ${
+                status?.type === 'error' ? 'border-red-300 bg-red-50' : 
+                status?.type === 'success' ? 'border-green-300 bg-green-50' : 
+                'border-slate-200 hover:border-deet-blue hover:bg-blue-50/30'
+              }`} 
               onClick={() => fileInputRef.current?.click()}
             >
               <div className="flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform ${error ? 'text-red-500' : 'text-deet-blue'}`}>
+                <div className={`w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform ${
+                  status?.type === 'error' ? 'text-red-500' : 
+                  status?.type === 'success' ? 'text-green-500' : 
+                  'text-deet-blue'
+                }`}>
                   {isParsing ? <Loader2 className="animate-spin" size={24} /> : <Upload size={24} />}
                 </div>
                 <div>
-                  <h3 className={`font-bold text-sm ${error ? 'text-red-700' : 'text-slate-700'}`}>Auto-fill with AI</h3>
-                  <p className={`text-xs ${error ? 'text-red-500' : 'text-slate-400'}`}>
-                    {error || 'Upload your resume to fill the form instantly'}
+                  <h3 className={`font-bold text-sm ${
+                    status?.type === 'error' ? 'text-red-700' : 
+                    status?.type === 'success' ? 'text-green-700' : 
+                    'text-slate-700'
+                  }`}>Auto-fill with AI</h3>
+                  <p className={`text-xs ${
+                    status?.type === 'error' ? 'text-red-500' : 
+                    status?.type === 'success' ? 'text-green-500' : 
+                    'text-slate-400'
+                  }`}>
+                    {status?.text || 'Upload your resume to fill the form instantly'}
                   </p>
                 </div>
               </div>
