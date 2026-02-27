@@ -9,7 +9,80 @@ AI-powered resume parsing and professional profile management dashboard.
 - **AI Resume Parsing**: Upload your resume and let Gemini AI fill out your profile automatically.
 - **Professional Dashboard**: Manage your experience, education, and skills in a clean, modern interface.
 - **Vercel Ready**: Optimized for deployment on Vercel.
+# 🚀 Resume to DEET – Instant AI Registration System
 
+AI-powered resume parsing and intelligent profile management dashboard that transforms manual registration into a 5-second automated experience.
+
+---
+
+## 🧠 Overview
+
+Resume to DEET eliminates manual data entry by using Google Gemini 3 Flash to extract structured information directly from uploaded resumes (PDF, DOCX, Image). The system auto-fills a professional profile form, allowing users to review and submit instantly.
+
+This project demonstrates AI-driven automation combined with a clean serverless cloud architecture.
+
+---
+
+## 🏗️ Technical Architecture
+
+The system follows a modular full-stack architecture:
+
+### 🔹 Client Layer (Frontend)
+- React + Vite (Single Page Application)
+- Tailwind CSS for UI
+- Motion for animations
+- Converts uploaded files → Base64
+- Sends structured prompt + schema to Gemini API
+
+### 🔹 AI Service Layer
+- Google Gemini 3 Flash
+- Performs:
+  - OCR (for image/scanned PDFs)
+  - NLP extraction
+  - Layout understanding
+- Returns structured JSON profile data
+
+### 🔹 API Layer (Backend)
+- Express.js running as a Vercel Serverless Function
+- Routes:
+  - `POST /api/resume`
+  - `GET /api/resume/:email`
+- Handles validation and UPSERT logic
+
+### 🔹 Data Layer
+- SQLite (better-sqlite3)
+- Stores structured profile information
+- JSON-stringified arrays for skills, experience, and education
+
+---
+
+## 🔄 System Flow
+
+### 1️⃣ AI Resume Parsing ("Magic Fill")
+1. User uploads resume.
+2. Frontend converts file to Base64.
+3. Resume sent to Gemini 3 Flash with strict JSON schema.
+4. Gemini returns structured profile JSON.
+5. UI auto-fills form fields.
+6. User reviews and confirms.
+
+### 2️⃣ Profile Persistence
+1. Frontend sends JSON to `POST /api/resume`.
+2. Backend validates and performs UPSERT.
+3. SQLite stores profile data.
+
+### 3️⃣ Dashboard Retrieval
+1. App requests `GET /api/resume/:email`.
+2. Backend fetches from SQLite.
+3. Dashboard renders professional profile view.
+
+---
+
+## 🛠️ Local Development
+
+1. Clone the repository:
+   ```bash
+   git clone <your-repo-url>
 ## Local Development
 
 1. Clone the repository.
