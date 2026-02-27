@@ -51,6 +51,9 @@ The system follows a modular full-stack architecture:
 
 ---
 
+<img width="1175" height="700" alt="image" src="https://github.com/user-attachments/assets/bbd8bb0a-36c3-4a1a-91c9-b55f7f45dcf2" />
+
+
 ## 🔄 System Flow
 
 ### 1️⃣ AI Resume Parsing ("Magic Fill")
