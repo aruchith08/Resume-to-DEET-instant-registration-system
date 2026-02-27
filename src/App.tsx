@@ -80,7 +80,7 @@ export default function App() {
         // Check for required fields to determine if details are sufficient
         const requiredFields: (keyof ResumeData)[] = [
           'fullName', 'surname', 'email', 'phone', 'dateOfBirth', 
-          'socialStatus', 'district', 'pincode'
+          'district', 'pincode'
         ];
         
         const isMissingRequired = requiredFields.some(field => !data[field]);
@@ -338,7 +338,7 @@ function SignupPage({ onSignup }: { onSignup: (data: ResumeData) => void }) {
         // Check for required fields to determine if details are sufficient
         const requiredFields: (keyof ResumeData)[] = [
           'fullName', 'surname', 'email', 'phone', 'dateOfBirth', 
-          'socialStatus', 'district', 'pincode'
+          'district', 'pincode'
         ];
         
         const isMissingRequired = requiredFields.some(field => !data[field]);

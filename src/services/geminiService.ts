@@ -57,7 +57,7 @@ const resumeSchema = {
     },
     dateOfBirth: { 
       type: Type.STRING,
-      description: "Extract date of birth if available, format as YYYY-MM-DD. Otherwise leave empty."
+      description: "Extract date of birth if available. MUST be in YYYY-MM-DD format (e.g., 1995-05-20) to work with HTML date inputs. Otherwise leave empty."
     },
     gender: { 
       type: Type.STRING,
@@ -68,10 +68,13 @@ const resumeSchema = {
     disabilityPercentage: { type: Type.NUMBER },
     socialStatus: { 
       type: Type.STRING,
-      description: "Extract social category if mentioned (e.g., OC, SC, ST, BC-A, etc.)."
+      description: "Extract social category. Map to one of these exact values: 'OC', 'SC', 'ST', 'Minority'. If unknown, leave empty."
     },
     religion: { type: Type.STRING },
-    district: { type: Type.STRING },
+    district: { 
+      type: Type.STRING,
+      description: "Extract district. Map to one of these exact uppercase values: 'ADILABAD', 'BHADRADRI KOTHAGUDEM', 'HANUMAKONDA', 'HYDERABAD', 'JAGTIAL', 'JANGAON', 'JAYASHANKAR BHUPALPALLY', 'JOGULAMBA GADWAL', 'KAMAREDDY', 'KARIMNAGAR', 'KHAMMAM', 'KOMARAM BHEEM ASIFABAD', 'MAHABUBABAD', 'MAHABUBNAGAR', 'MANCHERIAL', 'MEDAK', 'MEDCHAL', 'MULUGU', 'NAGARKURNOOL', 'NALGONDA', 'NARAYANPET', 'NIRMAL', 'NIZAMABAD', 'PEDDAPALLI', 'RAJANNA SIRCILLA', 'RANGA REDDY', 'SANGAREDDY', 'SIDDIPET', 'SURYAPET', 'VIKARABAD', 'WANAPARTHY', 'WARANGAL', 'YADADRI BHUVANAGIRI'. If not in list, leave empty."
+    },
     residenceType: { 
       type: Type.STRING,
       description: "Infer if address is 'Rural' or 'Urban'."
